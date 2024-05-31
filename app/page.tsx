@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   const adviceId = data?.slip?.id || '0';
-  const advice = data?.slip?.advice || 'Loading advice...';
+  const advice = data?.slip?.advice;
 
   return (
     <main className="flex flex-col items-center justify-between min-h-screen p-24">
@@ -31,9 +31,7 @@ export default function Home() {
           </p>
 
           <p className="min-h-40 flex flex-col justify-center w-4/5 mb-8 text-2xl font-medium text-center">
-            &quot;
-            {advice}
-            &quot;
+            {advice && `"${advice}"`}
           </p>
         </div>
 
