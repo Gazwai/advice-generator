@@ -1,27 +1,31 @@
-import useSWR, { Fetcher } from 'swr';
+import useSWR, { Fetcher, SWRConfiguration } from 'swr';
 
-type slipProps = {
+type SlipProps = {
   id: number;
   advice: string;
 };
 
-const useGetRequest = (route: string) => {
-  const fetcher: Fetcher<{ slip: slipProps }> = async (route: string) => {
-    const res = await fetch(route);
+type UseGetRequestOptions = SWRConfiguration & {
+  initialData?: SlipProps;
+};
 
-    if (!res.ok) {
-      const error = new Error('An error occurred while fetching the data.');
-      throw error;
-    }
+const fetcher: Fetcher<{ slip: SlipProps }> = async (route: string) => {
+  const response = await fetch(route);
+  if (!response.ok) {
+    throw new Error('An error occurred while fetching the data.');
+  }
+  return response.json();
+};
 
-    return res.json();
-  };
-
-  return useSWR(route, fetcher, {
+const useGetRequest = (route: string, options?: UseGetRequestOptions) => {
+  const defaultOptions = {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
-  });
+    ...options,
+  };
+
+  return useSWR<{ slip: SlipProps }>(route, fetcher, defaultOptions);
 };
 
 export default useGetRequest;
