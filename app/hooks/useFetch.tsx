@@ -1,4 +1,4 @@
-import useSWR, { Fetcher, SWRConfiguration } from 'swr';
+import useSWR, { Fetcher, SWRConfiguration } from "swr";
 
 type SlipProps = {
   id: number;
@@ -12,7 +12,7 @@ type UseGetRequestOptions = SWRConfiguration & {
 const fetcher: Fetcher<{ slip: SlipProps }> = async (route: string) => {
   const response = await fetch(route);
   if (!response.ok) {
-    throw new Error('An error occurred while fetching the data.');
+    throw new Error("An error occurred while fetching the data.");
   }
   return response.json();
 };
