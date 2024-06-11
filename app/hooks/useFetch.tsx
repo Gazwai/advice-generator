@@ -10,7 +10,7 @@ type UseGetRequestOptions = SWRConfiguration & {
 };
 
 const fetcher: Fetcher<{ slip: SlipProps }> = async (route: string) => {
-  const response = await fetch(route);
+  const response = await fetch(route, { cache: "no-store" });
   if (!response.ok) {
     throw new Error("An error occurred while fetching the data.");
   }
